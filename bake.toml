@@ -1,0 +1,26 @@
+[package]
+name = "nghttp3"
+version = "1.18.0"
+type = "lib"
+
+[language]
+c = "c17"
+
+[dependencies]
+upstream = { url = "https://github.com/ngtcp2/nghttp3/archive/refs/tags/v1.18.0.tar.gz" }
+
+# Built without config.h: the platform answers nghttp3's configure probes
+# would produce are stated per target instead. Windows maps the ntoh family
+# onto _byteswap_* intrinsics via WIN32. Strict -std=c17 hides ntohs on
+# darwin/linux without the feature macros.
+[target."*-apple-darwin"]
+defines = ["HAVE_ARPA_INET_H", "HAVE_NETINET_IN_H", "_DARWIN_C_SOURCE"]
+
+[target."*-linux-musl"]
+defines = ["HAVE_ARPA_INET_H", "HAVE_NETINET_IN_H", "_DEFAULT_SOURCE"]
+
+[target."*-linux-gnu"]
+defines = ["HAVE_ARPA_INET_H", "HAVE_NETINET_IN_H", "_DEFAULT_SOURCE"]
+
+[target."*-windows-gnu"]
+defines = ["WIN32", "NGHTTP3_STATICLIB"]
