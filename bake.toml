@@ -23,4 +23,5 @@ defines = ["HAVE_ARPA_INET_H", "HAVE_NETINET_IN_H", "_DEFAULT_SOURCE"]
 defines = ["HAVE_ARPA_INET_H", "HAVE_NETINET_IN_H", "_DEFAULT_SOURCE"]
 
 [target."*-windows-gnu"]
-defines = ["WIN32", "NGHTTP3_STATICLIB"]
+defines = ["WIN32"]
+public_defines = ["NGHTTP3_STATICLIB"]
